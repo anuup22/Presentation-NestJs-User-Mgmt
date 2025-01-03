@@ -6,7 +6,9 @@ import {
   Param,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { RolesGuard } from 'src/roles/roles.guard';
 
 @Controller('users')
 export class UsersController {
@@ -41,6 +43,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(RolesGuard)
   deleteUser(@Param('id') id: string) {
     const userIndex = this.users.findIndex((user) => user.id === parseInt(id));
     if (userIndex === -1) return { message: 'User not found' };
