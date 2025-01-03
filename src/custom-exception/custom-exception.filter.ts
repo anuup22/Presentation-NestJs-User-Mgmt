@@ -15,7 +15,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
     response.status(status).json({
       success: false,
       statusCode: status,
-      message: exception.message,
+      message: exception.getResponse(),
     });
   }
 }
