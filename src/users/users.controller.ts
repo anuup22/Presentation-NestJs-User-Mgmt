@@ -7,15 +7,19 @@ import {
   Put,
   Delete,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { RolesGuard } from 'src/roles/roles.guard';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
   private users = []; // In-memory array to simulate a database
 
   @Post()
-  createUser(@Body() body: { name: string; email: string }) {
+  @UsePipes(new ValidationPipe())
+  createUser(@Body() body: CreateUserDto) {
     const newUser = { id: Date.now(), ...body };
     this.users.push(newUser);
     return newUser;
